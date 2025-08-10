@@ -1,0 +1,192 @@
+                    <div className="chart-mask" style={{ height: "auto", overflowX: "scroll", alignItems: "center", padding: "10px",scrollbarWidth: 'none',}}>
+                        <div style={{
+                            alignItems: "center", marginTop: "20px",
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                            gap: '20px', overflowX:"scroll",
+                            WebkitOverflowScrolling: 'hidden',
+                            scrollbarWidth: 'none',
+                        }}>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{fontSize: "20px"}}>Place No:</label>
+                                <input type="number" value={placeNo} onChange={(e) => setPlaceNo(e.target.value)} placeholder="Nhập mã vị trí" />
+                            </div>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{fontSize: "20px"}}>Temperature:</label>
+                                <input type="number" value={temp} onChange={(e) => setTemp(e.target.value)} placeholder="Nhập nhiệt độ" />
+                                <span>({dv[lstCol.indexOf("temperature")]})</span>
+                            </div>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{fontSize: "20px"}}>pH:</label>
+                                <input type="number" value={pH} onChange={(e) => setpH(e.target.value)} placeholder="Nhập pH" />
+                            </div>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>Coliform:</label>
+                                <input
+                                type="number"
+                                value={coliform}
+                                onChange={(e) => setColiform(e.target.value)}
+                                placeholder="Nhập Coliform"
+                                />
+                                <span>({dv[lstCol.indexOf("coliform")]})</span>
+                            </div>
+                            </div>
+                        <div style={{
+                            alignItems: "center", marginTop: "20px",
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                            gap: '20px', overflowX:"scroll",
+                            WebkitOverflowScrolling: 'hidden',
+                            scrollbarWidth: 'none',
+                        }}>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>DO:</label>
+                                <input
+                                type="number"
+                                value={DO}
+                                onChange={(e) => setDO(e.target.value)}
+                                placeholder="Nhập DO"
+                                />
+                                <span>({dv[lstCol.indexOf("DO")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>Conductivity:</label>
+                                <input
+                                type="number"
+                                value={con}
+                                onChange={(e) => setCon(e.target.value)}
+                                placeholder="Nhập độ dẫn điện"
+                                />
+                                <span>({dv[lstCol.indexOf("conductivity")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>Alkalinity:</label>
+                                <input
+                                type="number"
+                                value={alkan}
+                                onChange={(e) => setAlkan(e.target.value)}
+                                placeholder="Nhập độ kiềm"
+                                />
+                                <span>({dv[lstCol.indexOf("alkalinity")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>Aeromonas Hydrophila:</label>
+                                <select
+                                value={aero}
+                                onChange={(e) => setAero(e.target.value)}
+                                style={{ fontSize: "16px", padding: "5px" }}
+                                >
+                                <option value="Positive">Positive</option>
+                                <option value="Negative">Negative</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style={{
+                            alignItems: "center", marginTop: "20px",
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                            gap: '20px', overflowX:"scroll",
+                            WebkitOverflowScrolling: 'hidden',
+                            scrollbarWidth: 'none',
+                        }}>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>NO₂:</label>
+                                <input
+                                type="number"
+                                value={no2}
+                                onChange={(e) => setNO2(e.target.value)}
+                                placeholder="Nhập NO2"
+                                />
+                                <span>({dv[lstCol.indexOf("no2")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>NH₄:</label>
+                                <input
+                                type="number"
+                                value={nh4}
+                                onChange={(e) => setNH4(e.target.value)}
+                                placeholder="Nhập NH4"
+                                />
+                                <span>({dv[lstCol.indexOf("nh4")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>PO₄:</label>
+                                <input
+                                type="number"
+                                value={po4}
+                                onChange={(e) => setPO4(e.target.value)}
+                                placeholder="Nhập PO4"
+                                />
+                                <span>({dv[lstCol.indexOf("po4")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>Edwardsiella Ictaluri:</label>
+                                <select
+                                value={edward}
+                                onChange={(e) => setEdward(e.target.value)}
+                                style={{ fontSize: "16px", padding: "5px" }}
+                                >
+                                <option value="Positive">Positive</option>
+                                <option value="Negative">Negative</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style={{
+                            alignItems: "center", marginTop: "20px",
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                            gap: '20px', overflowX:"scroll",
+                            WebkitOverflowScrolling: 'hidden',
+                            scrollbarWidth: 'none',
+                        }}>
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>H₂S:</label>
+                                <input
+                                type="number"
+                                value={h2s}
+                                onChange={(e) => setH2S(e.target.value)}
+                                placeholder="Nhập H2S"
+                                />
+                                <span>({dv[lstCol.indexOf("h2s")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>TSS:</label>
+                                <input
+                                type="number"
+                                value={tss}
+                                onChange={(e) => setTSS(e.target.value)}
+                                placeholder="Nhập TSS"
+                                />
+                                <span>({dv[lstCol.indexOf("tss")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>COD:</label>
+                                <input
+                                type="number"
+                                value={cod}
+                                onChange={(e) => setCOD(e.target.value)}
+                                placeholder="Nhập COD"
+                                />
+                                <span>({dv[lstCol.indexOf("cod")]})</span>
+                            </div>
+
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <label style={{ fontSize: "20px" }}>Aeromonas Total:</label>
+                                <input
+                                type="number"
+                                value={totalAe}
+                                onChange={(e) => setTotalAe(e.target.value)}
+                                placeholder="Nhập Aeromonas Total"
+                                />
+                                <span>({dv[lstCol.indexOf("aeromonas_total")]})</span>
+                            </div>
+                        </div>
+                    </div>

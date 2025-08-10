@@ -1,0 +1,129 @@
+# version: "3"
+# services:
+#   zookeeper:
+#     image: wurstmeister/zookeeper
+#     ports:
+#       - "2181:2181"
+#     environment:
+#       - ALLOW_ANONYMOUS_LOGIN=yes
+#     networks:
+#       - wqi-network
+
+#   kafka:
+#     image: wurstmeister/kafka
+#     ports:
+#       - "9092:9092"
+#     environment:
+#       KAFKA_ADVERTISED_HOST_NAME: localhost
+#       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#       KAFKA_CREATE_TOPICS: "raw-sensor-data:1:1,processed-data:1:1,wqi-predictions:1:1,water-quality-alerts:1:1"
+#       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+#     depends_on:
+#       - zookeeper
+#     networks:
+#       - wqi-network
+
+#   mysql:
+#     image: mysql:latest
+#     ports:
+#       - "3307:3308"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: rootpassword
+#       MYSQL_DATABASE: do_an_HTTT
+#     volumes:
+#       - ./backend/mysql/db.sql:/docker-entrypoint-initdb.d/db.sql
+#     networks:
+#       - wqi-network
+
+# networks:
+#   wqi-network:
+#     driver: bridge
+version: "3"
+services:
+  frontend-service:
+    image: fe:v1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - analysis-service
+      - auth-service
+      - chatbot-service
+      # - ai-model-service
+    environment:
+      HOST_NAME: localhost
+    networks:
+      - wqi-network
+
+  analysis-service:
+    image: analysis_service:v1
+    ports:
+      - "3002:3002"
+    environment:
+      - DB_HOST=ballast.proxy.rlwy.net
+      - DB_PORT=50205
+      - DB_USER=root
+      - DB_PASSWORD=IKSzaRZEQpcOoUNdzTVgHzibDYptqDip
+      - DB_NAME=railway
+    networks:
+      - wqi-network
+
+  chatbot-service:
+    image: chatbot_service:v1
+    ports:
+      - "3005:3005"
+    environment:
+      - GEMINI_API_KEY=AIzaSyBlBp3R8OOOjOrYyDdCPCrG99Xvx1aMc84
+      - DB_HOST=ballast.proxy.rlwy.net
+      - DB_PORT=50205
+      - DB_USER=root
+      - DB_PASSWORD=IKSzaRZEQpcOoUNdzTVgHzibDYptqDip
+      - DB_NAME=railway
+    networks:
+      - wqi-network
+
+  auth-service:
+    image: auth_service:v1
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_HOST=ballast.proxy.rlwy.net
+      - DB_PORT=50205
+      - DB_USER=root
+      - DB_PASSWORD=IKSzaRZEQpcOoUNdzTVgHzibDYptqDip
+      - DB_NAME=railway
+    networks:
+      - wqi-network
+
+  # ai-model-service:
+  #   image: ai_model:v1
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - wqi-network
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - wqi-network
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CREATE_TOPICS=raw-sensor-data:1:1,processed-data:1:1,wqi-predictions:1:1,water-quality-alerts:1:1
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+    depends_on:
+      - zookeeper
+    networks:
+      - wqi-network
+
+networks:
+  wqi-network:
+    driver: bridge

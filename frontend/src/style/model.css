@@ -1,0 +1,44 @@
+body{
+    margin: 0;
+}
+.head-tag {
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    width: 98%;
+    text-align: left;
+    margin-top: 100px;
+}
+.head-tag h1 {
+    font-size: 24px;
+    background-color: #4CAF50;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    color: white;
+    width: 100%;
+}
+.head-tag span {
+    width: 10px;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    border-radius: 5px 0 0 5px;
+    background-color: #4CA;
+}
+.content {
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    justify-items: center;
+    background-color: white;
+    width: 100%;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 3% 4%;
+}
+.chart-mask{
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #f0f0f0; 
+    align-items: center;                  
+}

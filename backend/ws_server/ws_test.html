@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Test Client</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      #log {
+        height: 400px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+        background-color: #f5f5f5;
+      }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+      .data {
+        color: blue;
+      }
+      button {
+        padding: 8px 12px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WebSocket Test Client</h1>
+    <div>
+      <button id="connectButton">Connect</button>
+      <button id="disconnectButton" disabled>Disconnect</button>
+      <span id="status">Disconnected</span>
+    </div>
+    <h2>Messages</h2>
+    <div id="log"></div>
+
+    <script>
+      let socket;
+      const log = document.getElementById("log");
+      const status = document.getElementById("status");
+      const connectButton = document.getElementById("connectButton");
+      const disconnectButton = document.getElementById("disconnectButton");
+
+      function appendLog(message, className) {
+        const time = new Date().toLocaleTimeString();
+        const entry = document.createElement("div");
+        entry.className = className;
+        entry.textContent = `[${time}] ${message}`;
+        log.appendChild(entry);
+        log.scrollTop = log.scrollHeight;
+      }
+
+      function connect() {
+        try {
+          appendLog("Connecting to WebSocket server...", "info");
+          socket = new WebSocket("ws://localhost:3010");
+
+          socket.onopen = function (event) {
+            appendLog("Connected to WebSocket server", "success");
+            status.textContent = "Connected";
+            status.style.color = "green";
+            connectButton.disabled = true;
+            disconnectButton.disabled = false;
+          };
+
+          socket.onmessage = function (event) {
+            try {
+              const data = JSON.parse(event.data);
+              const formatted = JSON.stringify(data, null, 2);
+              appendLog(`Received: ${formatted}`, "data");
+            } catch (e) {
+              appendLog(`Received: ${event.data}`, "data");
+            }
+          };
+
+          socket.onclose = function (event) {
+            appendLog("Connection closed", "info");
+            status.textContent = "Disconnected";
+            status.style.color = "red";
+            connectButton.disabled = false;
+            disconnectButton.disabled = true;
+          };
+
+          socket.onerror = function (error) {
+            appendLog(`Error: ${error}`, "error");
+          };
+        } catch (e) {
+          appendLog(`Error creating WebSocket: ${e}`, "error");
+        }
+      }
+
+      function disconnect() {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.close();
+          appendLog("Disconnected from server", "info");
+        }
+      }
+
+      connectButton.addEventListener("click", connect);
+      disconnectButton.addEventListener("click", disconnect);
+    </script>
+  </body>
+</html>

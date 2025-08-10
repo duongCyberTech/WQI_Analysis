@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - data-service
+      - ai-service
+
+  data-service:
+    build: ./data-service
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=Thanhdat12358
+      - DB_NAME=do_an_HTTT
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql
+
+  ai-service:
+    build: ./ai-service
+    ports:
+      - "8000:8000"
+
+  mysql:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: water_quality
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"

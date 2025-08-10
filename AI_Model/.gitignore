@@ -1,0 +1,81 @@
+# --------------------
+# Thư mục môi trường ảo
+# --------------------
+.venv/
+venv/
+env/
+ENV/
+
+# --------------------
+# Python bytecode & cache
+# --------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --------------------
+# File môi trường
+# --------------------
+.env
+
+# --------------------
+# Thư mục VSCode
+# --------------------
+.vscode/
+
+# --------------------
+# Thư mục PyCharm
+# --------------------
+.idea/
+
+# --------------------
+# Log, runnable, database
+# --------------------
+*.log
+*.sqlite3
+*.db
+*.env
+
+# --------------------
+# Package distribution
+# --------------------
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# --------------------
+# Static analysis
+# --------------------
+htmlcov/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# --------------------
+# Jupyter Notebook checkpoints
+# --------------------
+.ipynb_checkpoints/
+
+# --------------------
+# MacOS
+# --------------------
+.DS_Store
+
+# --------------------
+# Docker
+# --------------------
+# Nếu bạn có Dockerfile và folder compose, giữ nguyên
+# Nhưng ignore volumes/temp files:
+docker-compose.override.yml
+*.log
+
+# --------------------
+# Others
+# --------------------
+*.swp
+*.swo

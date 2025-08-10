@@ -1,0 +1,4 @@
+npm install react-router-dom@6
+npm install axios
+npm install stream-http https-browserify stream-browserify util url assert crypto-browserify browserify-zlib
+npm install recharts
