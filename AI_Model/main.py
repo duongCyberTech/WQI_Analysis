@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 from sqlalchemy import create_engine, text, Table, MetaData, update
 import pymysql
+import os
 
 class InputData(BaseModel):
     place: Dict[str, float]
@@ -45,7 +46,7 @@ app.add_middleware(
     allow_headers=["*"],  # Cho phép tất cả các header
 )
 
-DB_URI = "mysql+pymysql://root:IKSzaRZEQpcOoUNdzTVgHzibDYptqDip@ballast.proxy.rlwy.net:50205/railway"
+DB_URI = "mysql+pymysql://root:123456@localhost:3306/do_an_HTTT"
 
 def get_data_count(engine):
     with engine.connect() as conn:
@@ -69,29 +70,11 @@ def retrain_model(df, model_path="./model_v2.pkl"):
 
 @app.post("/test")
 def read_items(data: InputData):
-    # engine = create_engine(DB_URI)
-    # c = pd.read_sql("SELECT * FROM retrain", engine)["count"][0]
-    # data_count = get_data_count(engine)
-
-    # if data_count * 0.05 < c:
-    #     dfr = pd.read_sql("SELECT * FROM alldata", engine)
-    #     retrain_model(dfr)
-    #     metadata = MetaData()
-    #     metadata.reflect(bind=engine)
-
-    #     # Load bảng
-    #     retrain = Table("retrain", metadata, autoload_with=engine)
-
-    #     # Update bản ghi có id = 1
-    #     stmt = (
-    #         update(retrain)
-    #         .where(retrain.c.id == 1)
-    #         .values(count=0)
-    #     )
-
-    #     with engine.connect() as conn:
-    #         conn.execute(stmt)
-    #         conn.commit()
+    global my_model_clf
+    if os.path.exists("temp_xg.pkl"):
+        print("Found temp_xg.pkl, updating model_v2.pkl")
+        os.remove("model_v2.pkl")
+        os.rename("temp_xg.pkl", "model_v2.pkl")
     df = pd.DataFrame({k: list(v.values())[0] for k, v in data.dict().items()}, index=[0])
     prediction = my_model_clf.predict(df)
     return {"prediction": prediction.tolist()}

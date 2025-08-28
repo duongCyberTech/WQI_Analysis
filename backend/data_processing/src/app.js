@@ -4,14 +4,14 @@ const { validateSensorData } = require("./processors/data_validation");
 const { detectAnomalies } = require("./processors/anomaly_detector");
 const { predictWQI } = require("./processors/ml_predictor");
 const mysql = require("mysql2/promise");
-// require("dotenv").config();
-// const pool = mysql.createPool({
-//   host: "ballast.proxy.rlwy.net",
-//   user: "root",
-//   password: "IKSzaRZEQpcOoUNdzTVgHzibDYptqDip",
-//   database: "railway",
-//   port: 50205
-// });
+require("dotenv").config();
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "123456",
+  database: "do_an_HTTT",
+  port: 3306
+});
 
 // Kết nối đến Kafka
 const kafka = new Kafka({
@@ -55,16 +55,16 @@ async function processMessage(message) {
       anomalies: anomalies,
     };
     console.log("WQI result:", wqiResult);
-    // const mysqlDateOnly = new Date(validatedData.timestamp).toISOString().slice(0, 10);
-    // // Lưu vào database (nếu cần)
-    // await pool.query(`INSERT INTO alldata(place, observation_point, province, district, coordinate, date, temperature, pH, DO, conductivity, alkalinity, no2, nh4, po4, h2s, tss, cod,
-    //   aeromonas_total, edwardsiella_ictaluri, aeromonas_hydrophila, coliform, wqi, water_quality) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, 
-    //   [validatedData.place, validatedData.observation_point, validatedData.province, validatedData.district, validatedData.coordinate,
-    //   mysqlDateOnly, validatedData.readings.temperature, validatedData.readings.pH, validatedData.readings.DO,
-    //   validatedData.readings.conductivity, validatedData.readings.alkalinity, validatedData.readings.no2, validatedData.readings.nh4,
-    //   validatedData.readings.po4, validatedData.readings.h2s, validatedData.readings.tss, validatedData.readings.cod,
-    //   validatedData.readings.aeromonas_total, validatedData.readings.edwardsiella_ictaluri, validatedData.readings.aeromonas_hydrophila, validatedData.readings.coliform, 
-    //   wqiResult.wqi, wqiResult.waterQuality]);
+    const mysqlDateOnly = new Date(validatedData.timestamp).toISOString().slice(0, 10);
+    // Lưu vào database (nếu cần)
+    await pool.query(`INSERT INTO alldata(place, observation_point, province, district, coordinate, date, temperature, pH, DO, conductivity, alkalinity, no2, nh4, po4, h2s, tss, cod,
+      aeromonas_total, edwardsiella_ictaluri, aeromonas_hydrophila, coliform, wqi, water_quality) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, 
+      [validatedData.place, validatedData.observation_point, validatedData.province, validatedData.district, validatedData.coordinate,
+      mysqlDateOnly, validatedData.readings.temperature, validatedData.readings.pH, validatedData.readings.DO,
+      validatedData.readings.conductivity, validatedData.readings.alkalinity, validatedData.readings.no2, validatedData.readings.nh4,
+      validatedData.readings.po4, validatedData.readings.h2s, validatedData.readings.tss, validatedData.readings.cod,
+      validatedData.readings.aeromonas_total, validatedData.readings.edwardsiella_ictaluri, validatedData.readings.aeromonas_hydrophila, validatedData.readings.coliform, 
+      wqiResult.wqi, wqiResult.waterQuality]);
     // Bước 4: Gửi dữ liệu đã xử lý vào topic khác
     await producer.send({
       topic: "processed-data",
