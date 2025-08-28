@@ -3,7 +3,7 @@ python -m venv .venv
 .\.venv\Scripts\activate.bat
 python -m pip install --upgrade pip
 pip install fastapi uvicorn
-python -m pip install fastapi pandas pydantic uvicorn[standard] scikit-learn xgboost joblib
+python -m pip install -r requirements.txt
 
 
 //run app
