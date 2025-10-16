@@ -6,6 +6,7 @@ A responsive web-based application, using Machine Learning to analyze and predic
  - [2. Project Structure](#Project-Structure)
  - [3. Machine Learning Model](#Machine-Learning-Model)
  - [4. Application settings](#Application-settings)
+ - [5. Demo and Report](#Demo-and-Report)
 # **Technologies**
 | Technology| Used in       |
 |-----------|---------------|
@@ -126,5 +127,7 @@ Run this command in project level.
 ```
 docker compose up -d
 ```
+# Demo and Report
+This link includes report and demo video of this project: [Demo](https://drive.google.com/drive/folders/17A80IHl16zvnR3LUSnJcWq8X_NhFGgW8?usp=sharing)
 
 
